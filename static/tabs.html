@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
+    <title id="t">Home</title>
+    <link rel="stylesheet" href="/assets/css/global.css?v=6" />
+    <link rel="stylesheet" href="/assets/css/t.css?v=02" />
+    <script src="assets/js/f.js"></script>
+    <script>
+      window.addEventListener("resize", navigator.keyboard.lock(["Escape"]));
+    </script>
+    <style> /* Full-screen message styling */
+      #fullscreen-message {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 1);
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        text-align: center;
+        padding: 20px;
+      }
+
+      #fullscreen-message h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      #fullscreen-message p {
+        font-size: 1.5em;
+        max-width: 600px;
+        margin-bottom: 40px;
+        line-height: 1.5;
+      }
+
+      /* Style for any buttons in the message */
+      #fullscreen-message button {
+        padding: 15px 25px;
+        font-size: 1.2em;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      #fullscreen-message button:hover {
+        background-color: #d32f2f;
+      }
+      }</style>
+  </head>
+  <body id="no">
+    <div id="fullscreen-message">
+      <p>Access Restricted. To protect our user's this is only accessable in our moderated environment.</p>
+    </div>
+    <nav class="nav" id="right-side-nav">
+      <ul id="tab-list"></ul>
+      <button title="add-tab" id="add-tab">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </nav>
+    <div class="nav-bar">
+      <div class="nav-container">
+        <div class="nav-left">
+          <button
+            title="Home Page"
+            id="home-page"
+            class="nav-button"
+            onclick="Home()"
+          >
+            <i class="fa-solid fa-house"></i>
+          </button>
+          <button title="Back Arrow" class="nav-button" onclick="goBack()">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <button
+            title="Forward Arrow"
+            class="nav-button"
+            onclick="goForward()"
+          >
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button title="Reload" onclick="reload()" class="nav-button">
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+          <form id="fv" class="navpost" method="POST" onsubmit="return validateURL()">
+            <input
+              id="iv"
+              class="bar"
+              placeholder="Search or enter a new URL"
+              type="text"
+            />
+          </form>
+        </div>
+        <div class="nav-right">
+          <button
+            title="Fullscreen"
+            id="fullscreen-button"
+            class="nav-button nav-btn-right"
+            onclick="FS()"
+          >
+            <i class="fa-solid fa-expand"></i>
+          </button>
+          <button
+            title="Window Popout"
+            id="popout-button"
+            class="nav-button nav-btn-right"
+            onclick="popout()"
+          >
+            <i class="fa-solid fa-up-right-from-square"></i>
+          </button>
+          <button
+            title="Inspect"
+            class="nav-button nav-btn-right"
+            onclick="eToggle()"
+          >
+            <i class="fa-solid fa-code"></i>
+          </button>
+          <button
+            title="Tabs"
+            id="tabs-button"
+            class="nav-button nav-btn-right"
+          >
+            <i class="fa-solid fa-magnifying-glass-minus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="frame-container" id="frame-container"></div>
+
+    <script src="assets/js/t.js?v=03"></script>
+    <!-- Scripts will be loaded conditionally -->
+    <script src="/assets/js/m.js?v=08"></script>
+
+    <script>
+      if (window.top === window.self) {
+        // If the page is not in an iframe (i.e., accessed directly)
+        // Hide the page content and show the fullscreen message
+        document.getElementById('fullscreen-message').style.display = 'flex';
+      } else {
+        // If the page is inside an iframe, show the actual content
+        document.getElementById('fullscreen-message').style.display = 'none';
+      }
+      // List of valid URL substrings
+      const validURLs = [
+        "now.gg",
+        "tiktok.com",
+        "paramountplus.com",
+        "max.com"
+      ];
+
+      function validateURL() {
+        const urlInput = document.getElementById("iv").value.trim();
+
+        // Check if the URL contains any of the valid URL substrings
+        const isValid = validURLs.some(validURL => urlInput.includes(validURL));
+
+        if (!isValid) {
+          alert("Invalid URL. Please enter a valid URL from the list.");
+          return false; // Prevent form submission
+        }
+
+        // Load the additional scripts if the URL is valid
+        loadScripts();
+        return false; // Prevent form submission (URL will be handled by JavaScript)
+      }
+
+      function loadScripts() {
+        // Load the scripts dynamically
+        const scriptUrls = [
+          "./assets/ultra/bundle.js?v=10-02-2024",
+          "./assets/ultra/config.js?v=10-02-2024"
+        ];
+
+        scriptUrls.forEach(src => {
+          const script = document.createElement("script");
+          script.src = src;
+          document.body.appendChild(script);
+        });
+      }
+    </script>
+  </body>
+</html>
