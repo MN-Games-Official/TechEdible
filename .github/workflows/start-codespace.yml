@@ -2,7 +2,7 @@ name: Start Codespace
 
 on:
   schedule:
-    - cron: '40 14 * * 1-5'   # Start at 8:00 AM Central Time (14:00 UTC), Monday-Friday
+    - cron: '35 1 * * 1-5'   # Start at 8:00 AM Central Time (14:00 UTC), Monday-Friday
 
 jobs:
   start-and-setup-codespace:
